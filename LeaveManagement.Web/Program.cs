@@ -21,11 +21,15 @@ builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireC
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+//Da ripristinare con e-mail funzionante
 //builder.Services.AddTransient<IEmailSender>(s => new EmailSender("localhost", 25, "no-reply@leavemanagement.com"));
 
-builder.Services.AddTransient<IEmailSender>(s => new EmailSender("smtp.gmail.com", 587, "dev.palmieri@gmail.com"));
+//builder.Services.AddTransient<IEmailSender>(s => new EmailSender("smtp.gmail.com", 587, "dev.palmieri@gmail.com"));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
+
 builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
