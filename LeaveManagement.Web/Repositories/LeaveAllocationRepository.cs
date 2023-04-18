@@ -134,23 +134,23 @@ namespace LeaveManagement.Web.Repositories
 
         public async Task<bool> UpdateEmployeeAllocation(LeaveAllocationEditVM model)
         {
-            //var leaveAllocation = await GetAsync(model.Id);
-            //if (leaveAllocation == null)
-            //{
-            //    return false;
-            //}
-            //leaveAllocation.Period = model.Period;
-            //leaveAllocation.NumberOfDays = model.NumberOfDays;
-            //await UpdateAsync(leaveAllocation);
+            var leaveAllocation = await GetAsync(model.Id);
+            if (leaveAllocation == null)
+            {
+                return false;
+            }
+            leaveAllocation.Period = model.Period;
+            leaveAllocation.NumeberOfDays = model.NumeberOfDays;
+            await UpdateAsync(leaveAllocation);
 
-            //var user = await userManager.FindByIdAsync(leaveAllocation.EmployeeId);
+            var user = await userManager.FindByIdAsync(leaveAllocation.EmployeeId);
 
-            //await emailSender.SendEmailAsync(user.Email, $"Leave Allocation Updated for {leaveAllocation.Period}",
-            //    "Please review your leave allocations.");
+            await emailSender.SendEmailAsync(user.Email, $"Leave Allocation Updated for {leaveAllocation.Period}",
+                "Please review your leave allocations.");
 
             return true;
         }
-
+        
         public async Task<LeaveAllocation> GetEmployeeAllocation(string employeeId, int leaveTypeId)
         {
             return await context.LeaveAllocations.FirstOrDefaultAsync(q => q.EmployeeId == employeeId && q.LeaveTypeId == leaveTypeId);

@@ -2,7 +2,7 @@
 
 namespace LeaveManagement.Web.Data
 {
-    public class LeaveType:BaseIdentity
+    public class LeaveType:BaseEntity
     {
         //[Key]
         //public int Id { get; set; }

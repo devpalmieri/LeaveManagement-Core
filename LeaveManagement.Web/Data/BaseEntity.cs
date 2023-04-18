@@ -2,7 +2,7 @@
 
 namespace LeaveManagement.Web.Data
 {
-    public abstract class BaseIdentity
+    public abstract class BaseEntity
     {
         [Key]
         public int Id { get; set; }

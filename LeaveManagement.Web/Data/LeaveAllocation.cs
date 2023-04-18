@@ -2,7 +2,7 @@
 
 namespace LeaveManagement.Web.Data
 {
-    public class LeaveAllocation: BaseIdentity
+    public class LeaveAllocation: BaseEntity
     {
         public int NumeberOfDays { get; set; }
         [ForeignKey("LeaveTypeId")]
