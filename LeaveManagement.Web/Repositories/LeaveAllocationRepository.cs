@@ -35,27 +35,27 @@ namespace LeaveManagement.Web.Repositories
             this.configurationProvider = configurationProvider;
         }
 
-        public async Task LeaveAllocation(int leaveTypeId)
-        {
-            var employees = await userManager.GetUsersInRoleAsync(Roles.User);
-            var period = DateTime.Now.Year;
-            var leaveType=await leaveTypeRepository.GetAsync(leaveTypeId);
-            var allocations = new List<LeaveAllocation>();
-            foreach (var employee in employees)
-            {
-                if (await AllocationExists(employee.Id, leaveTypeId, period))
-                    continue;
+        //public async Task LeaveAllocation(int leaveTypeId)
+        //{
+        //    var employees = await userManager.GetUsersInRoleAsync(Roles.User);
+        //    var period = DateTime.Now.Year;
+        //    var leaveType=await leaveTypeRepository.GetAsync(leaveTypeId);
+        //    var allocations = new List<LeaveAllocation>();
+        //    foreach (var employee in employees)
+        //    {
+        //        if (await AllocationExists(employee.Id, leaveTypeId, period))
+        //            continue;
 
-                    allocations.Add (new LeaveAllocation
-                {
-                    EmployeeId = employee.Id,
-                    LeaveTypeId = leaveTypeId,
-                    Period = period,
-                    NumeberOfDays = leaveType.DefaultDays
-                });
-                await AddRangeAsync (allocations);    
-            }
-        }
+        //            allocations.Add (new LeaveAllocation
+        //        {
+        //            EmployeeId = employee.Id,
+        //            LeaveTypeId = leaveTypeId,
+        //            Period = period,
+        //            NumeberOfDays = leaveType.DefaultDays
+        //        });
+        //        await AddRangeAsync (allocations);    
+        //    }
+        //}
         public async Task<bool> AllocationExists(string employeeId, int leaveTypeId, int period)
         {
             return await context.LeaveAllocations.AnyAsync(q => q.EmployeeId == employeeId
@@ -100,37 +100,37 @@ namespace LeaveManagement.Web.Repositories
             return model;
         }
 
-        //public async Task LeaveAllocation(int leaveTypeId)
-        //{
-        //    var employees = await userManager.GetUsersInRoleAsync(Roles.User);
-        //    var period = DateTime.Now.Year;
-        //    var leaveType = await leaveTypeRepository.GetAsync(leaveTypeId);
-        //    var allocations = new List<LeaveAllocation>();
-        //    var employeesWithNewAllocations = new List<Employee>();
+        public async Task LeaveAllocation(int leaveTypeId)
+        {
+            var employees = await userManager.GetUsersInRoleAsync(Roles.User);
+            var period = DateTime.Now.Year;
+            var leaveType = await leaveTypeRepository.GetAsync(leaveTypeId);
+            var allocations = new List<LeaveAllocation>();
+            var employeesWithNewAllocations = new List<Employee>();
 
-        //    foreach (var employee in employees)
-        //    {
-        //        if (await AllocationExists(employee.Id, leaveTypeId, period))
-        //            continue;
+            foreach (var employee in employees)
+            {
+                if (await AllocationExists(employee.Id, leaveTypeId, period))
+                    continue;
 
-        //        allocations.Add(new LeaveAllocation
-        //        {
-        //            EmployeeId = employee.Id,
-        //            LeaveTypeId = leaveTypeId,
-        //            Period = period,
-        //            NumberOfDays = leaveType.DefaultDays
-        //        });
-        //        employeesWithNewAllocations.Add(employee);
-        //    }
+                allocations.Add(new LeaveAllocation
+                {
+                    EmployeeId = employee.Id,
+                    LeaveTypeId = leaveTypeId,
+                    Period = period,
+                    NumeberOfDays = leaveType.DefaultDays
+                });
+                employeesWithNewAllocations.Add(employee);
+            }
 
-        //    await AddRangeAsync(allocations);
+            await AddRangeAsync(allocations);
 
-        //    foreach (var employee in employeesWithNewAllocations)
-        //    {
-        //        await emailSender.SendEmailAsync(employee.Email, $"Leave Allocation Posted for {period}", $"Your {leaveType.Name} " +
-        //            $"has been posted for the period of {period}. You have been given {leaveType.DefaultDays}.");
-        //    }
-        //}
+            foreach (var employee in employeesWithNewAllocations)
+            {
+                await emailSender.SendEmailAsync(employee.Email, $"Leave Allocation Posted for {period}", $"Your {leaveType.Name} " +
+                    $"has been posted for the period of {period}. You have been given {leaveType.DefaultDays}.");
+            }
+        }
 
         public async Task<bool> UpdateEmployeeAllocation(LeaveAllocationEditVM model)
         {
