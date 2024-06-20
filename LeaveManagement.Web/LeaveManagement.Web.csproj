@@ -8,7 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\LeaveTypeVM.cs" />
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Constants\**" />
+    <Compile Remove="Contracts\**" />
+    <Compile Remove="Data\**" />
+    <Compile Remove="Models\**" />
+    <Compile Remove="Repositories\**" />
+    <Content Remove="Configuration\**" />
+    <Content Remove="Constants\**" />
+    <Content Remove="Contracts\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Models\**" />
+    <Content Remove="Repositories\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Constants\**" />
+    <EmbeddedResource Remove="Contracts\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Constants\**" />
+    <None Remove="Contracts\**" />
+    <None Remove="Data\**" />
+    <None Remove="Models\**" />
+    <None Remove="Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +47,10 @@
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Serilog.Expressions" Version="3.4.1" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LeaveManagement.Application\LeaveManagement.Application.csproj" />
   </ItemGroup>
 
 </Project>
